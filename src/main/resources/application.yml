@@ -28,10 +28,10 @@ spring:
       mail:
         transport:
           protocol: smtp
-      smtp:
-        starttls:
-          enabled: true
-          required: true
+        smtp:
+          starttls:
+            enabled: true
+            required: true
         auth: true
         connectiontimeout: 5000
         timeout: 5000

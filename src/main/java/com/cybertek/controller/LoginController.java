@@ -19,14 +19,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "Authentication Controller",description = "Authenticate API")
 public class LoginController {
 
-	@Value("${app.local-url")
+	@Value("${app.local-url}")
 	private String BASE_URL;
 
 	private AuthenticationManager authenticationManager;
@@ -68,12 +67,13 @@ public class LoginController {
 	@Operation(summary = "Create new account")
 	private ResponseEntity<ResponseWrapper> doRegister(@RequestBody UserDTO userDTO) throws TicketingProjectException {
 		UserDTO createdUser = userService.save(userDTO);
+
 		sendEmail(createEmail(createdUser));
 		return ResponseEntity.ok(new ResponseWrapper("User has been created!",createdUser));
 	}
 
 	@DefaultExceptionMessage(defaultMessage = "Failed to confirm email,please try again!")
-	@PostMapping("/confirmation")
+	@GetMapping("/confirmation")
 	@Operation(summary = "Confirm Account")
 	public ResponseEntity<ResponseWrapper> confirmEmail(@RequestParam("token") String token) throws TicketingProjectException {
 		ConfirmationToken confirmationToken = confirmationTokenService.readByToken(token);
@@ -87,7 +87,7 @@ public class LoginController {
 		User user = mapperUtil.convert(userDTO,new User());
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
 		confirmationToken.setIsDeleted(false);
-		//
+
 		ConfirmationToken createdConfirmationToken = confirmationTokenService.save(confirmationToken);
 		return MailDTO
 				.builder()
@@ -104,6 +104,8 @@ public class LoginController {
 		mailMessage.setTo(mailDTO.getEmailTo());
 		mailMessage.setSubject(mailDTO.getSubject());
 		mailMessage.setText(mailDTO.getMessage() + mailDTO.getUrl() + mailDTO.getToken());
+
+		confirmationTokenService.sendEmail(mailMessage);
 	}
 
 }

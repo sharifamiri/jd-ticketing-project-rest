@@ -38,7 +38,7 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
             throw new TicketingProjectException("This token does not exists");
         }
 
-        if (confirmationToken.isTokenValid(confirmationToken.getExpireDate())){
+        if (!confirmationToken.isTokenValid(confirmationToken.getExpireDate())){
             throw new TicketingProjectException("This token has been expired");
         }
         return confirmationToken;

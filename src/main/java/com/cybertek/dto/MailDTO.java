@@ -11,7 +11,7 @@ public class MailDTO {
 
     private String emailTo;
     private String emailFrom;
-    protected String message;
+    private String message;
     private String token;
     private String subject;
     private String url;

@@ -67,7 +67,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
-    @Operation(summary = "Read All Users")
+    @Operation(summary = "Read by username")
     //Only admin should see other profiles or current user can see their profile
     public ResponseEntity<ResponseWrapper> readByUsername(@PathVariable("username") String username){
         UserDTO user = userService.findByUserName(username);
@@ -93,7 +93,7 @@ public class UserController {
 
     @GetMapping("/role")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
-    @Operation(summary = "Read All Users")
+    @Operation(summary = "Read by role")
     @PreAuthorize("hasAnyAuthority('Admin','Manager')")
     public ResponseEntity<ResponseWrapper> readByRole(@RequestParam String role){
         List<UserDTO> userList = userService.listAllByRole(role);

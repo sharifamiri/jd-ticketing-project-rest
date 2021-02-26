@@ -76,7 +76,7 @@ public class UserController {
 
     @PutMapping
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
-    @Operation(summary = "Delete User")
+    @Operation(summary = "Update User")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO user) throws TicketingProjectException {
         UserDTO updatedUser = userService.update(user);
@@ -85,7 +85,7 @@ public class UserController {
 
     @DeleteMapping("/{username}")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
-    @Operation(summary = "Read All Users")
+    @Operation(summary = "Delete User")
     public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("username") String username) throws TicketingProjectException {
         userService.delete(username);
         return ResponseEntity.ok(new ResponseWrapper("Successfully deleted"));

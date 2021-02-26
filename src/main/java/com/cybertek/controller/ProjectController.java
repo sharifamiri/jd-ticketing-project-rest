@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/project")
-@Tag(name = "Projects Controller",description = "User API")
+@Tag(name = "Project Controller",description = "Project API")
 public class ProjectController {
 
     ProjectService projectService;
@@ -84,7 +84,7 @@ public class ProjectController {
         return ResponseEntity.ok(new ResponseWrapper("Projects is deleted",projectcode));
     }
 
-    @DeleteMapping("/complete/{projectcode}")
+    @PutMapping("/complete/{projectcode}")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @Operation(summary = "Complete project")
     @PreAuthorize("hasAuthority('Manager')")

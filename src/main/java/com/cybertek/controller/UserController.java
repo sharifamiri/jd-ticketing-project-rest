@@ -74,7 +74,7 @@ public class UserController {
         return ResponseEntity.ok(new ResponseWrapper("Successfully retrieved user",user));
     }
 
-    @GetMapping
+    @PutMapping
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @Operation(summary = "Delete User")
     @PreAuthorize("hasAuthority('Admin')")
@@ -105,16 +105,7 @@ public class UserController {
 
 
 
-    @DefaultExceptionMessage(defaultMessage = "Failed to confirm email,please try again!")
-    @GetMapping("/confirmation")
-    @Operation(summary = "Confirm Account")
-    public ResponseEntity<ResponseWrapper> confirmEmail(@RequestParam("token") String token) throws TicketingProjectException {
-        ConfirmationToken confirmationToken = confirmationTokenService.readByToken(token);
-        UserDTO confirmUser = userService.confirm(confirmationToken.getUser());
-        confirmationTokenService.delete(confirmationToken);
 
-        return ResponseEntity.ok(new ResponseWrapper("User has been confirmed?",confirmUser));
-    }
 
     private MailDTO createEmail(UserDTO userDTO){
         User user = mapperUtil.convert(userDTO,new User());

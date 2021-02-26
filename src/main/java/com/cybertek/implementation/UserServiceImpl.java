@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService {
         }
         //map update user dto to entity object
         User convertedUser = mapperUtil.convert(dto,new User());
-
         convertedUser.setPassWord(passwordEncoder.encode(convertedUser.getPassWord()));
         convertedUser.setEnabled(true);
 

@@ -1,6 +1,7 @@
 package com.cybertek.dto;
 
 import com.cybertek.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"},ignoreUnknown = true)
 public class ProjectDTO {
 
     private Long id;

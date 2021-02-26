@@ -94,6 +94,16 @@ public class ProjectController {
         return ResponseEntity.ok(new ResponseWrapper("Projects is complete",projectcode));
     }
 
+    @GetMapping("/details")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Read all project details")
+    @PreAuthorize("hasAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> readAllProjectDetails(@PathVariable("projectcode") String projectcode) throws TicketingProjectException {
+
+        List<ProjectDTO> projectDTOs = projectService.listAllProjectDetails();
+        return ResponseEntity.ok(new ResponseWrapper("Projects are retrieved with details",projectDTOs));
+    }
+
 
 
 }

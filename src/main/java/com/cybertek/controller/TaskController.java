@@ -10,6 +10,7 @@ import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/task")
+@Tag(name = "Task Controller",description = "Task API")
 public class TaskController {
 
     private TaskService taskService;
@@ -87,9 +89,14 @@ public class TaskController {
     @GetMapping("/employee")
     @Operation(summary = "Read all non complete tasks")
     @PreAuthorize("hasAuthority('Employee')")
-    public ResponseEntity<ResponseWrapper> employeeReadAllNonCompleteTask(){
+    public ResponseEntity<ResponseWrapper> employeeReadAllNonCompleteTask() throws TicketingProjectException {
         List<TaskDTO> tasks = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
         return ResponseEntity.ok(new ResponseWrapper("Successfully read non completed current user task",tasks));
+    }
+
+    public ResponseEntity<ResponseWrapper> employeeUpdateTask(@RequestBody TaskDTO taskDTO) throws TicketingProjectException {
+        TaskDTO task = taskService.updateStatus(taskDTO);
+        return ResponseEntity.ok(new ResponseWrapper("Successfullly employee task status updated",task));
     }
 
 

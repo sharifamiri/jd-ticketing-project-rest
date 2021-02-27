@@ -13,10 +13,12 @@ import java.util.List;
 public interface TaskService {
 
     TaskDTO findById(Long id) throws TicketingProjectException;
+
     List<TaskDTO> listAllTasks();
-    Task save(TaskDTO dto);
-    void update(TaskDTO dto);
-    void delete(Long id);
+
+    TaskDTO save(TaskDTO dto);
+    TaskDTO update(TaskDTO dto) throws TicketingProjectException;
+    void delete(Long id) throws TicketingProjectException;
 
     int totalNonCompletedTasks(String projectCode);
     int totalCompletedTasks(String projectCode);
@@ -25,7 +27,7 @@ public interface TaskService {
 
     List<TaskDTO> listAllByProject(ProjectDTO project);
 
-    List<TaskDTO> listAllTasksByStatusIsNot(Status status);
+    List<TaskDTO> listAllTasksByStatusIsNot(Status status) throws TicketingProjectException;
 
     List<TaskDTO> listAllTasksByProjectManager() throws TicketingProjectException;
 

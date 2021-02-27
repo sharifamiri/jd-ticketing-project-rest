@@ -94,6 +94,9 @@ public class TaskController {
         return ResponseEntity.ok(new ResponseWrapper("Successfully read non completed current user task",tasks));
     }
 
+    @PutMapping("/employee/update")
+    @Operation(summary = "Read employee task")
+    @PreAuthorize("hasAuthority('Employee')")
     public ResponseEntity<ResponseWrapper> employeeUpdateTask(@RequestBody TaskDTO taskDTO) throws TicketingProjectException {
         TaskDTO task = taskService.updateStatus(taskDTO);
         return ResponseEntity.ok(new ResponseWrapper("Successfullly employee task status updated",task));

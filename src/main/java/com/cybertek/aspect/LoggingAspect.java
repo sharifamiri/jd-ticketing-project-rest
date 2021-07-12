@@ -1,9 +1,7 @@
 package com.cybertek.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -24,4 +22,17 @@ public class LoggingAspect {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         log.info("Before(User : {} Method : {} - Parameters : {}",auth.getName(),joinPoint.getSignature().toLongString(),joinPoint.getArgs());
     }
+
+    @AfterReturning(pointcut = "anyControllerOperation()",returning = "results")
+    public void anyAfterReturningControllerOperationAdvice(JoinPoint joinPoint,Object results){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("AfterReturning(User : {} Method : {} - Results : {}",auth.getName(),joinPoint.getSignature().toShortString(),results.toString());
+    }
+
+    @AfterThrowing(pointcut = "anyControllerOperation()",throwing = "exception")
+    public void anyAfterThrowingControllerOperationAdvice(JoinPoint joinPoint,RuntimeException exception){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("After Throwing(User : {} Method : {} - Exception : {}",auth.getName(),joinPoint.getSignature().toShortString(),exception.getLocalizedMessage());
+    }
+
 }

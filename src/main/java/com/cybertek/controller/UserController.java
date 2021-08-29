@@ -47,7 +47,7 @@ public class UserController {
     public ResponseEntity<ResponseWrapper> doRegister(@RequestBody UserDTO userDTO) throws TicketingProjectException {
         UserDTO createdUser = userService.save(userDTO);
 
-        sendEmail(createEmail(createdUser));
+//        sendEmail(createEmail(createdUser));
 
         return ResponseEntity.ok(new ResponseWrapper("User has been created!",createdUser));
     }

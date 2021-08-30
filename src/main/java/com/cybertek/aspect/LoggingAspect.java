@@ -1,5 +1,6 @@
 package com.cybertek.aspect;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -10,9 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @Aspect
 @Configuration
+@Slf4j
 public class LoggingAspect {
 
-    Logger log = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("execution(* com.cybertek.controller.ProjectController.*(..)) || execution(* com.cybertek.controller.TaskController.*(..))")
     private void anyControllerOperation(){}
